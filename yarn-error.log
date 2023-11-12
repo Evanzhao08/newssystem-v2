@@ -1,0 +1,63 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js add sass
+
+PATH: 
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;%NVM_HOME%;%NVM_SYMLINK%;D:\Program Files\TortoiseGit\bin;C:\Users\Evan\AppData\Local\Microsoft\WindowsApps;C:\Users\Evan\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Evan\AppData\Roaming\npm;C:\Program Files\Git;C:\Users\Evan\AppData\Roaming\nvm;C:\Program Files\nodejs
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.19.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: 7028:error:1408F119:SSL routines:ssl3_get_record:decryption failed or bad record mac:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:677:
+
+npm manifest: 
+  {
+    "name": "newssystem",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+      "@testing-library/jest-dom": "^5.17.0",
+      "@testing-library/react": "^13.4.0",
+      "@testing-library/user-event": "^13.5.0",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-scripts": "5.0.1",
+      "web-vitals": "^2.1.4"
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+      "extends": [
+        "react-app",
+        "react-app/jest"
+      ]
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
