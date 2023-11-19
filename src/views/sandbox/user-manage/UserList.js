@@ -12,10 +12,16 @@ const { confirm } = Modal
 export default function UserList() {
   const [dataSource, setDataSource] = useState([])
   const [isOpen, setIsOpen] = useState(false)
+  const [isUpdate, setIsUpdateOpen] = useState(false)
+
   const [roleList, setRoleList] = useState([])
   const [regionList, setRegionList] = useState([])
+  const [isUpdateDisabled, setIsUpdateDisabled] = useState(false)
+  const [current, setCurrent] = useState(null)
+
   const addForm = useRef(null)
   const [form] = Form.useForm()
+  const [updateForm] = Form.useForm()
   useEffect(() => {
     axios.get('http://localhost:5000/users?_expand=role').then((res) => {
       const list = res.data
@@ -40,6 +46,22 @@ export default function UserList() {
     {
       title: '区域',
       dataIndex: 'region',
+      filters: [
+        ...regionList.map((item) => ({
+          text: item.title,
+          value: item.value,
+        })),
+        {
+          text: '全球',
+          value: '全球',
+        },
+      ],
+      onFilter: (value, item) => {
+        if (value === '全球') {
+          return item.region === ''
+        }
+        return item.region === value
+      },
       render: (region) => {
         return <b>{region === '' ? '全球' : region}</b>
       },
@@ -85,12 +107,28 @@ export default function UserList() {
               shape="circle"
               icon={<EditOutlined />}
               disabled={item.default}
+              onClick={() => handleUpdate(item)}
             />
           </div>
         )
       },
     },
   ]
+
+  const handleUpdate = (item) => {
+    setTimeout(() => {
+      setIsUpdateOpen(true)
+      if (item.roleId === 1) {
+        //禁用
+        setIsUpdateDisabled(true)
+      } else {
+        //取消禁用
+        setIsUpdateDisabled(false)
+      }
+      updateForm.setFieldsValue(item)
+    }, 0)
+    setCurrent(item)
+  }
 
   const confirmMethod = (item) => {
     confirm({
@@ -122,8 +160,6 @@ export default function UserList() {
   }
 
   const onCreate = (values) => {
-    console.log('Received values of form: ', values)
-    setIsOpen(false)
     axios
       .post(`http://localhost:5000/users`, {
         ...values,
@@ -140,6 +176,31 @@ export default function UserList() {
           },
         ])
       })
+  }
+
+  const updateFormOk = () => {
+    updateForm.validateFields().then((values) => {
+      setIsUpdateOpen(false)
+      form.resetFields()
+      //  onCreate(values)
+      setDataSource(
+        dataSource.map((item) => {
+          if (item.id === current.id) {
+            return {
+              ...item,
+              ...values,
+              role: roleList.filter((data) => data.id === values.roleId)[0],
+            }
+          }
+          return item
+        })
+      )
+      setIsUpdateDisabled(!isUpdateDisabled)
+      axios.patch(`http://localhost:5000/users/${current.id}`, values)
+    })
+    // .catch((info) => {
+    //   console.log('Validate Failed:', info)
+    // })
   }
 
   return (
@@ -169,6 +230,7 @@ export default function UserList() {
             .validateFields()
             .then((values) => {
               form.resetFields()
+              setIsOpen(false)
               onCreate(values)
             })
             .catch((info) => {
@@ -189,6 +251,26 @@ export default function UserList() {
           regionList={regionList}
           form={form}
           ref={addForm}></UserForm>
+      </Modal>
+
+      <Modal
+        open={isUpdate}
+        title="更新用户"
+        okText="更新"
+        cancelText="取消"
+        onCancel={() => {
+          setIsUpdateOpen(false)
+          setIsUpdateDisabled(!isUpdateDisabled)
+        }}
+        onOk={() => {
+          updateFormOk()
+        }}>
+        <UserForm
+          roleList={roleList}
+          regionList={regionList}
+          form={updateForm}
+          ref={updateForm}
+          isUpdateDisabled={isUpdateDisabled}></UserForm>
       </Modal>
     </div>
   )

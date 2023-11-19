@@ -1,8 +1,12 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useState, useEffect } from 'react'
 import { Input, Form, Select } from 'antd'
 
 const UserForm = forwardRef((props, ref) => {
   const [isDisabled, setIsDisabled] = useState(false)
+  useEffect(() => {
+    setIsDisabled(props.isUpdateDisabled)
+  }, [props.isUpdateDisabled])
+
   return (
     <Form
       form={props.form}
