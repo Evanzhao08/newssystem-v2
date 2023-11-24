@@ -51,8 +51,11 @@ const iconList = {
 
 
 const { Sider } = Layout
+
+const { role: { rights } } = JSON.parse(localStorage.getItem("token"))
+
 const checkPagePermission = (item) => {
-  return item.pagepermisson === 1
+  return item.pagepermisson === 1 && rights.includes(item.key)
 }
 
 export default withRouter(function SideMenu (props) {
@@ -98,9 +101,7 @@ export default withRouter(function SideMenu (props) {
             items={meun}
           />
         </div>
-
       </div>
-
     </Sider>
   )
 }

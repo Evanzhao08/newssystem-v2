@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Table, Form, Modal, Switch } from 'antd'
 import {
   EditOutlined,
@@ -9,7 +9,7 @@ import axios from 'axios'
 import UserForm from '../../../components/sandbox/user-manage/UserForm'
 
 const { confirm } = Modal
-export default function UserList() {
+export default function UserList () {
   const [dataSource, setDataSource] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const [isUpdate, setIsUpdateOpen] = useState(false)
@@ -22,12 +22,25 @@ export default function UserList() {
   const addForm = useRef(null)
   const [form] = Form.useForm()
   const [updateForm] = Form.useForm()
+
+  const { roleId, region, username } = JSON.parse(localStorage.getItem("token"))
+
+  const roleObj = useMemo(() => {
+    return {
+      "1": "superadmin",
+      "2": "admin",
+      "3": "editer"
+    }
+  }, [])
   useEffect(() => {
     axios.get('http://localhost:5000/users?_expand=role').then((res) => {
       const list = res.data
-      setDataSource(list)
+      setDataSource(roleObj[roleId] === "superadmin" ? list : [
+        ...list.filter(item => item.username === username),
+        ...list.filter(item => item.region === region && roleObj[roleId] === 'editer')
+      ])
     })
-  }, [])
+  }, [roleId, region, username, roleObj])
   useEffect(() => {
     axios.get(' http://localhost:5000/roles').then((res) => {
       const list = res.data
@@ -85,7 +98,7 @@ export default function UserList() {
           <Switch
             checked={roleState}
             disabled={item.default}
-            //  onChange={() => switchMethod(item)}
+          //  onChange={() => switchMethod(item)}
           ></Switch>
         )
       },
@@ -135,10 +148,10 @@ export default function UserList() {
       title: '您确定要删除吗？',
       icon: <ExclamationCircleFilled />,
       // content: 'Some descriptions',
-      onOk() {
+      onOk () {
         deleteMethod(item)
       },
-      onCancel() {
+      onCancel () {
         console.log('Cancel')
       },
     })
