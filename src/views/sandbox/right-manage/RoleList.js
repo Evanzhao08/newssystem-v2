@@ -30,7 +30,7 @@ export default function RoleList() {
       })
     )
     axios.patch(`http://localhost:5000/roles/${currentId}`, {
-      rights: currentRights,
+      rights: currentRights.checked,
     })
   }
   const handleCancel = () => {
