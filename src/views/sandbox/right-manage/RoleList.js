@@ -8,7 +8,7 @@ import {
 import axios from 'axios'
 const { confirm } = Modal
 
-export default function RoleList() {
+export default function RoleList () {
   const [dataSource, setDataSource] = useState([])
   const [rightList, setRightList] = useState([])
   const [currentRights, setCurrentRights] = useState([])
@@ -29,7 +29,7 @@ export default function RoleList() {
         return item
       })
     )
-    axios.patch(`http://localhost:5000/roles/${currentId}`, {
+    axios.patch(`/roles/${currentId}`, {
       rights: currentRights.checked,
     })
   }
@@ -37,13 +37,13 @@ export default function RoleList() {
     setIsModalOpen(false)
   }
   useEffect(() => {
-    axios.get(`http://localhost:5000/roles`).then((res) => {
+    axios.get(`/roles`).then((res) => {
       console.log(res.data)
       setDataSource(res.data)
     })
   }, [])
   useEffect(() => {
-    axios.get(`http://localhost:5000/rights?_embed=children`).then((res) => {
+    axios.get(`/rights?_embed=children`).then((res) => {
       console.log(res.data)
       setRightList(res.data)
     })
@@ -93,15 +93,15 @@ export default function RoleList() {
   const onCheck = (checkedKeys, info) => {
     setCurrentRights(checkedKeys)
   }
-  function confirmMethod(item) {
+  function confirmMethod (item) {
     confirm({
       title: '您确定要删除吗？',
       icon: <ExclamationCircleFilled />,
       // content: 'Some descriptions',
-      onOk() {
+      onOk () {
         deleteMethod(item)
       },
-      onCancel() {
+      onCancel () {
         console.log('Cancel')
       },
     })
@@ -112,7 +112,7 @@ export default function RoleList() {
     console.log(item)
     //当前页面同步状态+后端同步
     setDataSource(dataSource.filter((data) => data.id !== item.id))
-    axios.delete(`http://localhost:5000/roles/${item.id}`)
+    axios.delete(`/roles/${item.id}`)
   }
   return (
     <div>

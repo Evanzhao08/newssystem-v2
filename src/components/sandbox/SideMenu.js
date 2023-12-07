@@ -19,7 +19,7 @@ import './index.css'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 
-function getItem(label, key, icon, children) {
+function getItem (label, key, icon, children) {
   return {
     key,
     icon,
@@ -58,7 +58,7 @@ const checkPagePermission = (item) => {
   return item.pagepermisson === 1 && rights.includes(item.key)
 }
 
-export default withRouter(function SideMenu(props) {
+export default withRouter(function SideMenu (props) {
   const [collapsed] = useState(false)
   const [meun, setMenu] = useState([])
 
@@ -84,7 +84,7 @@ export default withRouter(function SideMenu(props) {
     })
   }
   useEffect(() => {
-    axios.get('http://localhost:5000/rights?_embed=children').then((res) => {
+    axios.get('/rights?_embed=children').then((res) => {
       const data = renderSideMenu(res.data)
       console.log(data)
       setMenu(data)

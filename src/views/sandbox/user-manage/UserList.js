@@ -33,7 +33,7 @@ export default function UserList () {
     }
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:5000/users?_expand=role').then((res) => {
+    axios.get('/users?_expand=role').then((res) => {
       const list = res.data
       setDataSource(roleObj[roleId] === "superadmin" ? list : [
         ...list.filter(item => item.username === username),
@@ -42,14 +42,14 @@ export default function UserList () {
     })
   }, [roleId, region, username, roleObj])
   useEffect(() => {
-    axios.get(' http://localhost:5000/roles').then((res) => {
+    axios.get('/roles').then((res) => {
       const list = res.data
       console.log('roleList', list)
       setRoleList(list)
     })
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:5000/regions').then((res) => {
+    axios.get('/regions').then((res) => {
       const list = res.data
       setRegionList(list)
     })
@@ -162,19 +162,19 @@ export default function UserList () {
     //当前页面同步状态+后端同步
     if (item.grade === 1) {
       setDataSource(dataSource.filter((data) => data.id !== item.id))
-      axios.delete(`http://localhost:5000/rights/${item.id}`)
+      axios.delete(`/rights/${item.id}`)
     } else {
       let list = dataSource.filter((data) => data.id === item.rightId)
       list[0].children = list[0].children.filter((data) => data.id !== item.id)
       console.log('list=>', list)
       setDataSource([...dataSource])
-      axios.delete(`http://localhost:5000/children/${item.id}`)
+      axios.delete(`/children/${item.id}`)
     }
   }
 
   const onCreate = (values) => {
     axios
-      .post(`http://localhost:5000/users`, {
+      .post(`/users`, {
         ...values,
         roleState: true,
         default: false,
@@ -209,7 +209,7 @@ export default function UserList () {
         })
       )
       setIsUpdateDisabled(!isUpdateDisabled)
-      axios.patch(`http://localhost:5000/users/${current.id}`, values)
+      axios.patch(`/users/${current.id}`, values)
     })
     // .catch((info) => {
     //   console.log('Validate Failed:', info)

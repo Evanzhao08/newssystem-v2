@@ -30,19 +30,19 @@ const LocalRouterMap = {
   '/publish-manage/sunset': Sunset,
 }
 
-export default function NewsRouter() {
+export default function NewsRouter () {
   const [BackRouteList, setBackRoutelist] = useState([])
   useEffect(() => {
     Promise.all([
-      axios.get('http://localhost:5000/rights'),
-      axios.get('http://localhost:5000/children'),
+      axios.get('/rights'),
+      axios.get('/children'),
     ]).then((res) => {
       setBackRoutelist([...res[0].data, ...res[1].data])
       //  console.log('用户列表 BackRouteList==>', [...res[0].data, ...res[1].data])
     })
   }, [])
 
-  function checkRoute(item) {
+  function checkRoute (item) {
     //
     return LocalRouterMap[item.key] && item.pagepermisson
   }

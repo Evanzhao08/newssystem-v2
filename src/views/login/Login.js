@@ -38,12 +38,12 @@ if (Math.random() > 0.85) {
   })
 }
 
-export default function Login(props) {
+export default function Login (props) {
   const onFinish = (values) => {
     console.log('Received values of form: ', values)
     axios
       .get(
-        `http://localhost:5000/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`
+        `/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`
       )
       .then((res) => {
         console.log('login', res.data)
