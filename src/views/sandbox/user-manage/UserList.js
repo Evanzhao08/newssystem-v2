@@ -158,18 +158,12 @@ export default function UserList () {
   }
   //删除
   const deleteMethod = (item) => {
-    console.log(item)
-    //当前页面同步状态+后端同步
-    if (item.grade === 1) {
-      setDataSource(dataSource.filter((data) => data.id !== item.id))
-      axios.delete(`/rights/${item.id}`)
-    } else {
-      let list = dataSource.filter((data) => data.id === item.rightId)
-      list[0].children = list[0].children.filter((data) => data.id !== item.id)
-      console.log('list=>', list)
-      setDataSource([...dataSource])
-      axios.delete(`/children/${item.id}`)
-    }
+    // console.log(item)
+    // 当前页面同步状态 + 后端同步
+
+    setDataSource(dataSource.filter((data) => data.id !== item.id))
+
+    axios.delete(`/users/${item.id}`)
   }
 
   const onCreate = (values) => {
