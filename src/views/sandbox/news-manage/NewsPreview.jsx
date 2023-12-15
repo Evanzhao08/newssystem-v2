@@ -9,6 +9,7 @@ const NewsPreview = (props) => {
   // const [author, createTime, region, publishState, star, view] = newsInfo
   const auditMapping = ['未审核', '审核中', '已通过', '未通过']
   const publishMapping = ['未发布', '待发布', '已上线', '已下线']
+  const colorList = ['black', 'orange', 'green', 'red']
   const items = [
     {
       key: '1',
@@ -35,13 +36,13 @@ const NewsPreview = (props) => {
     {
       key: '5',
       label: '审核状态',
-      contentStyle: { color: 'red' },
+      contentStyle: { color: colorList[newsInfo?.auditState] },
       children: auditMapping[newsInfo?.auditState],
     },
     {
       key: '6',
       label: '发布状态',
-      contentStyle: { color: 'red' },
+      contentStyle: { color: colorList[newsInfo?.publishState] },
       children: publishMapping[newsInfo?.publishState],
     },
     {

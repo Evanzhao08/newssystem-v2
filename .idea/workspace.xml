@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec4d6cd9-5902-4e2d-b8ec-0522e32a0a8c" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/db/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/sandbox/SideMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sandbox/SideMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/sandbox/user-manage/UserForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sandbox/user-manage/UserForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/db copy.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/sandbox/news-manage/NewsAdd.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/sandbox/news-manage/NewsAdd.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/sandbox/news-manage/NewsDraft.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/sandbox/news-manage/NewsDraft.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/sandbox/user-manage/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/sandbox/user-manage/UserList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,21 +30,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Volumes/D盘/FE/react_v2/newssystem-v2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Volumes/D盘/FE/react_v2/newssystem-v2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="npm.start">
     <configuration name="start (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
@@ -80,6 +84,9 @@
       <updated>1700888706104</updated>
       <workItem from="1700888708129" duration="6735000" />
       <workItem from="1701395601384" duration="510000" />
+      <workItem from="1702085246045" duration="1663000" />
+      <workItem from="1702086933084" duration="3159000" />
+      <workItem from="1702175307607" duration="14000" />
     </task>
     <servers />
   </component>
