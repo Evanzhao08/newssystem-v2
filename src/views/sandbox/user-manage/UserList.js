@@ -9,7 +9,7 @@ import axios from 'axios'
 import UserForm from '../../../components/sandbox/user-manage/UserForm'
 
 const { confirm } = Modal
-export default function UserList () {
+export default function UserList() {
   const [dataSource, setDataSource] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const [isUpdate, setIsUpdateOpen] = useState(false)
@@ -23,22 +23,29 @@ export default function UserList () {
   const [form] = Form.useForm()
   const [updateForm] = Form.useForm()
 
-  const { roleId, region, username } = JSON.parse(localStorage.getItem("token"))
+  const { roleId, region, username } = JSON.parse(localStorage.getItem('token'))
 
   const roleObj = useMemo(() => {
     return {
-      "1": "superadmin",
-      "2": "admin",
-      "3": "editer"
+      1: 'superadmin',
+      2: 'admin',
+      3: 'editer',
     }
   }, [])
   useEffect(() => {
     axios.get('/users?_expand=role').then((res) => {
       const list = res.data
-      setDataSource(roleObj[roleId] === "superadmin" ? list : [
-        ...list.filter(item => item.username === username),
-        ...list.filter(item => item.region === region && roleObj[roleId] === 'editer')
-      ])
+      setDataSource(
+        roleObj[roleId] === 'superadmin'
+          ? list
+          : [
+              ...list.filter((item) => item.username === username),
+              ...list.filter(
+                (item) =>
+                  item.region === region && roleObj[item.roleId] === 'editer'
+              ),
+            ]
+      )
     })
   }, [roleId, region, username, roleObj])
   useEffect(() => {
@@ -98,7 +105,7 @@ export default function UserList () {
           <Switch
             checked={roleState}
             disabled={item.default}
-          //  onChange={() => switchMethod(item)}
+            //  onChange={() => switchMethod(item)}
           ></Switch>
         )
       },
@@ -148,10 +155,10 @@ export default function UserList () {
       title: '您确定要删除吗？',
       icon: <ExclamationCircleFilled />,
       // content: 'Some descriptions',
-      onOk () {
+      onOk() {
         deleteMethod(item)
       },
-      onCancel () {
+      onCancel() {
         console.log('Cancel')
       },
     })

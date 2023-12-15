@@ -1,52 +1,48 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Table, Tag, Modal, Popover, Switch } from 'antd'
+import { Button, Table, Tag, notification } from 'antd'
 
-import {
-  EditOutlined,
-  DeleteOutlined,
-  ExclamationCircleFilled,
-} from '@ant-design/icons'
-const { confirm } = Modal
 const colorList = ['', 'orange', 'green', 'red']
-const auditList = ['草稿箱', "审核中", "已通过", "未通过"]
-export default function AuditList () {
+const auditList = ['草稿箱', '审核中', '已通过', '未通过']
+export default function AuditList(props) {
   const [dataSource, setDataSource] = useState([])
 
   const { username } = JSON.parse(localStorage.getItem('token'))
   useEffect(() => {
-    axios(`/news?author=${username}&auditState_ne=0&publishState_lte=1&_expand=category`).then(res => {
+    axios(
+      `/news?author=${username}&auditState_ne=0&publishState_lte=1&_expand=category`
+    ).then((res) => {
       setDataSource(res.data)
       console.log(res.data)
     })
   }, [username])
-  const confirmMethod = (item) => {
-    confirm({
-      title: '您确定要删除吗？',
-      icon: <ExclamationCircleFilled />,
-      // content: 'Some descriptions',
-      onOk () {
-        deleteMethod(item)
-      },
-      onCancel () {
-        console.log('Cancel')
-      },
+
+  function handleRervert(item) {
+    setDataSource(dataSource.filter((data) => data.id !== item.id))
+    axios.patch(`/news/${item.id}`, { auditState: 0 }).then((res) => {
+      notification.info({
+        message: `通知`,
+        description: `您可以到${'草稿箱'}中产看您的新闻`,
+        placement: 'bottomRight',
+      })
     })
   }
-  //删除
-  const deleteMethod = (item) => {
-    console.log(item)
-    //当前页面同步状态+后端同步
-    if (item.grade === 1) {
-      setDataSource(dataSource.filter((data) => data.id !== item.id))
-      axios.delete(`/rights/${item.id}`)
-    } else {
-      let list = dataSource.filter((data) => data.id === item.rightId)
-      list[0].children = list[0].children.filter((data) => data.id !== item.id)
-      console.log('list=>', list)
-      setDataSource([...dataSource])
-      axios.delete(`/children/${item.id}`)
-    }
+  const handleUpdate = (item) => {
+    props.history.push(`/news-manage/update/${item.id}`)
+  }
+  const handlePublish = (item) => {
+    axios
+      .patch(`/news/${item.id}`, {
+        publishState: 2,
+      })
+      .then((res) => {
+        props.history.push(`/publish-manage/published`)
+        notification.info({
+          message: `通知`,
+          description: `您可以到【发布管理/已经发布】中查看您的新闻`,
+          placement: 'bottomRight',
+        })
+      })
   }
   const columns = [
     {
@@ -80,18 +76,35 @@ export default function AuditList () {
       render: (item) => {
         return (
           <div>
-            <Button danger>发布</Button>
+            {item.auditState === 1 && (
+              <Button onClick={() => handleRervert(item)}>撤销</Button>
+            )}
+            {item.auditState === 2 && (
+              <Button danger onClick={() => handlePublish(item)}>
+                发布
+              </Button>
+            )}
+            {item.auditState === 3 && (
+              <Button onClick={() => handleUpdate(item)} type="primary">
+                更新
+              </Button>
+            )}
           </div>
         )
       },
     },
   ]
-  return <div> <Table
-    dataSource={dataSource}
-    columns={columns}
-    pagination={{
-      pageSize: 5,
-    }}
-    rowKey={item => item.id}
-  /></div>
+  return (
+    <div>
+      {' '}
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        pagination={{
+          pageSize: 5,
+        }}
+        rowKey={(item) => item.id}
+      />
+    </div>
+  )
 }
