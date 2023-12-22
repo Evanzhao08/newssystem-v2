@@ -18,8 +18,9 @@ import {
 import './index.css'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
-function getItem (label, key, icon, children) {
+function getItem(label, key, icon, children) {
   return {
     key,
     icon,
@@ -58,8 +59,7 @@ const checkPagePermission = (item) => {
   return item.pagepermisson === 1 && rights.includes(item.key)
 }
 
-export default withRouter(function SideMenu (props) {
-  const [collapsed] = useState(false)
+function SideMenu(props) {
   const [meun, setMenu] = useState([])
 
   const renderSideMenu = (data) => {
@@ -94,11 +94,10 @@ export default withRouter(function SideMenu (props) {
     props.history.push(e.key)
   }
 
-  console.log(props.location.pathname)
   const selectKeys = [props.location.pathname]
   const openKeys = ['/' + props.location.pathname.split('/')[1]]
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Sider trigger={null} collapsible collapsed={props.isCollapsed}>
       <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
         <div className="demo-logo-vertical">新闻发布管理系统</div>
         <div style={{ flex: 1, overflow: 'auto' }}>
@@ -114,4 +113,10 @@ export default withRouter(function SideMenu (props) {
       </div>
     </Sider>
   )
+}
+
+const mapStateToProps = ({ CollApsedReducer: { isCollapsed } }) => ({
+  isCollapsed,
 })
+
+export default connect(mapStateToProps)(withRouter(SideMenu))
